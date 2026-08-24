@@ -1,0 +1,29 @@
+# Text files: force LF line endings for cross-platform consistency
+*.mk    text eol=lf
+*.bp    text eol=lf
+*.rc    text eol=lf
+*.sh    text eol=lf
+*fstab* text eol=lf
+*prop*  text eol=lf
+
+# Source code and common text formats
+*.c     text eol=lf
+*.h     text eol=lf
+*.cpp   text eol=lf
+*.py    text eol=lf
+*.xml   text eol=lf
+*.json  text eol=lf
+*.txt   text eol=lf
+
+# Binary files: never modify line endings (critical for himax touch driver, kernel modules, etc.)
+*.ko    binary
+*.so    binary
+*.bin   binary
+*.img   binary
+*.dtb   binary
+*.db    binary
+*.png   binary
+*.jpg   binary
+*.gz    binary
+*kernel* binary
+*image* binary
