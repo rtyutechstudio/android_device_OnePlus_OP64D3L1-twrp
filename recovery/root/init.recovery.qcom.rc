@@ -39,6 +39,7 @@ on property:ro.boot.usbcontroller=*
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+	insmod /odm/lib/modules/focaltech_fts.ko
 
 on boot
     start vendor.oplus.vibrator
