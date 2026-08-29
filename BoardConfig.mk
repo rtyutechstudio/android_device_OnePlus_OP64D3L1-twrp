@@ -165,7 +165,7 @@ TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_LIBRESETPROP := true
-
+TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone21/temp
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 TW_HAS_EDL_MODE := true
