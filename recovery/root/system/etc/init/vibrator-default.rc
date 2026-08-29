@@ -41,7 +41,7 @@ on boot
     chown system system /sys/class/leds/vibrator/rtp_going
 	
 #endif /* OPLUS_FEATURE_CHG_BASIC */
-service vendor.oplus.vibrator /odm/bin/hw/vendor.oplus.hardware.vibrator-service
+service vendor.oplus.vibrator /vendor/bin/hw/vendor.oplus.hardware.vibrator-service
     class late_start
     user root
     group system root input
