@@ -180,8 +180,9 @@ TARGET_USES_MKE2FS := true
 
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_MAX_BRIGHTNESS := 4096
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_DEFAULT_BRIGHTNESS := 3800
 
 # Fastbootd
 TW_INCLUDE_FASTBOOTD := true
