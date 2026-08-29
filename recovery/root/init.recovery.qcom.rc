@@ -39,8 +39,16 @@ on property:ro.boot.usbcontroller=*
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-	insmod /odm/lib/modules/focaltech_fts.ko
 
 on boot
     start vendor.oplus.vibrator
 	start vendor.boot-qti
+	start touch-aidl
+
+service touch-aidl  /system/bin/vendor-oplus-hardware-touch-V2-hbp5-service
+    class hal
+    user root
+    group system input root readproc
+    capabilities SYS_NICE
+    interface aidl vendor.oplus.hardware.touch.IOplusTouch/default
+    seclabel u:r:recovery:s0
