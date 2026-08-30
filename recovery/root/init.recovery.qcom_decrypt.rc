@@ -33,7 +33,7 @@ service prepdecrypt /system/bin/prepdecrypt.sh
     user root
 	seclabel u:r:recovery:s0
 
-on property:ro.crypto.state=encrypted && property:ro.boot.dynamic_partitions=true
+on post-fs-data
     start prepdecrypt
 	
 on property:crypto.ready=1

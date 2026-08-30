@@ -1,5 +1,8 @@
 #!/system/bin/sh
 # For android 13+ decrypt
+# Mount persist
+mkdir /mnt/vendor/persist
+mount -t ext4 /dev/block/by-name/persist /mnt/vendor/persist
 setprop crypto.ready 1 >/dev/null 2>&1
 if [ "$(getprop crypto.ready 2>/dev/null)" = "1" ]; then
     logi "crypto.ready=1"
