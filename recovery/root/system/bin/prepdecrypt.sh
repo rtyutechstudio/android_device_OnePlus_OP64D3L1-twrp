@@ -5,7 +5,7 @@ mkdir /mnt/vendor/persist
 mount -t ext4 /dev/block/by-name/persist /mnt/vendor/persist
 mkdir /persist
 mkdir /persist/TWRP/
-cp /system/bin/.twrp_settings /persist/TWRP/
+cp /system/bin/twrp_settings /persist/TWRP/.twrp_settings
 setprop crypto.ready 1 >/dev/null 2>&1
 if [ "$(getprop crypto.ready 2>/dev/null)" = "1" ]; then
     logi "crypto.ready=1"
