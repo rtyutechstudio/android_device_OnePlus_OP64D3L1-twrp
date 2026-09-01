@@ -37,13 +37,29 @@ on property:ro.boot.usbcontroller=*
     wait /sys/class/udc/${ro.boot.usbcontroller} 1
 
 on fs
+	chmod 0755 /system/bin/init.recovery.wifi.sh
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+on early-boot
+    start twrp-wifi-init
 
 on boot
     start vendor.oplus.vibrator
 	start vendor.boot-qti
 	start touch-aidl
+    start twrp-wifi-init
+
+on property:twrp.wifi.driver.ready=true
+    stop wpa_supplicant
+    start wpa_supplicant
+
+on property:init.svc.wpa_supplicant=running
+    wait /data/vendor/wifi/wpa/sockets/wlan0 10
+    chmod 0777 /data/vendor/wifi/wpa/sockets
+    chmod 0777 /tmp/recovery/sockets
+    chmod 0777 /data/vendor/wifi/wpa/sockets/wlan0
+    chmod 0777 /tmp/recovery/sockets/wlan0
 
 service touch-aidl  /system/bin/vendor-oplus-hardware-touch-V2-hbp5-service
     class hal
@@ -51,4 +67,31 @@ service touch-aidl  /system/bin/vendor-oplus-hardware-touch-V2-hbp5-service
     group system input root readproc
     capabilities SYS_NICE
     interface aidl vendor.oplus.hardware.touch.IOplusTouch/default
+    seclabel u:r:recovery:s0
+
+service twrp-wifi-init /system/bin/sh /system/bin/init.recovery.wifi.sh
+    class main
+    user root
+    group root wifi inet net_admin
+    capabilities NET_ADMIN NET_RAW SYS_MODULE KILL
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service wpa_supplicant /vendor/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/vendor/etc/wifi/wpa_supplicant.conf -O/data/vendor/wifi/wpa/sockets
+    class main
+    user root
+    group root wifi inet net_admin
+    capabilities NET_ADMIN NET_RAW
+    disabled
+    setenv LD_LIBRARY_PATH /vendor/etc/wifi/lib64:/vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    seclabel u:r:recovery:s0
+
+service dhcpcd /system/bin/dhcpcd wlan0 -B
+    class main
+    user root
+    group root inet wifi net_admin
+    capabilities NET_ADMIN NET_RAW
+    disabled
+    oneshot
     seclabel u:r:recovery:s0
